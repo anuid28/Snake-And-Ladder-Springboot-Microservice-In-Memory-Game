@@ -1,0 +1,95 @@
+.home {
+	background-color: #ff944d;
+	border: 1px solid #ddd;
+	// padding: 8px;
+	//line-height: 6;
+	vertical-align: middle;
+	text-align: center;
+	//width: 10%;
+}
+
+
+.start {
+	background-color: #4dff88;
+	border: 1px solid #ddd;
+	// padding: 8px;
+	//line-height: 6;
+	//vertical-align: middle;
+	text-align: center;
+	//width: 10%;
+}
+
+.normal {
+	background-color: white;
+	border: 1px solid #ddd;
+	// padding: 8px;
+	//line-height: 6;
+	//  vertical-align: middle;
+	text-align: center;
+	//width: 10%;
+}
+
+.snake {
+	background-color: #ffcccc;
+}
+
+.ladder {
+	background-color: #ccffcc;
+}
+
+.red {
+	background-color: red;
+	color: #ffffff;
+	padding: 2px;
+	border: 1px solid #000000;
+
+}
+
+.yellow {
+	background-color: yellow;
+	color: #000000;
+	padding: 2px;
+	border: 1px solid #000000;
+
+}
+
+.green {
+	background-color: green;
+	color: #ffffff;
+	padding: 2px;
+	border: 1px solid #000000;
+
+}
+
+.blue {
+	background-color: blue;
+	color: #ffffff;
+	padding: 2px;
+	border: 1px solid #000000;
+
+}
+
+.messageText {
+	background-color: green;
+	color: #ffffff;
+	font-size: 11px;
+	padding: 7px;
+	border: 1px solid #000000;
+}
+
+.yellowBox {
+	background-color: yellow;
+	color: #000000;
+}
+
+.snakeLadderImg {
+	border: 1px solid #000000;
+}
+td {
+    width: 8%;
+    line-height: 5.4;
+}
+
+#body::backdrop {
+    background-color: rgba(255,255,255,0);
+}

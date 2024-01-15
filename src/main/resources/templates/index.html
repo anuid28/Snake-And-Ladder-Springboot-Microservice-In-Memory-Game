@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${message}"></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/Board.js}"></script>
+</head>
+<body id="body">
+
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <span id="playersTitle" style="display:none;">   <h4>Players</h4></span>
+            <ul class="nav nav-pills nav-stacked" id ="players">
+
+            </ul>
+            <br />
+            <div id="message" class=""></div>
+
+            <br>
+            <button type="button" style="display:none;" class="btn btn-success" id="throwDice"> Throw Dice </button> <button type="button" class="btn btn-success" id="newGame">New Game </button>
+            <br>
+            <div id="diceLoading" style="display:none;"><img th:src="@{/images/dice.gif}"/></div>
+            <div id="diceOutcome">
+                <img class="allImg" id="dice_1" th:src="@{/images/1.png}"/>
+                <img class="allImg" id="dice_2" th:src="@{/images/2.png}"/>
+                <img class="allImg" id="dice_3" th:src="@{/images/3.png}"/>
+                <img class="allImg" id="dice_4" th:src="@{/images/4.png}"/>
+                <img class="allImg" id="dice_5" th:src="@{/images/5.png}"/>
+                <img class="allImg" id="dice_6" th:src="@{/images/6.png}"/>
+
+            </div>
+            <div id="snakeImage" style="display:none;"> <img th:src="@{/images/snake.gif}" width="20" height="20" class="snakeLadderImg"/></div>
+            <div id="ladderImage" style="display:none;"> <img th:src="@{/images/ladder.gif}" width="20" height="20" class="snakeLadderImg"/></div>
+        </div>
+
+        <div class="col-sm-9">
+            <span id="newGameMessage" th:text="${message}"> </span>
+            <table class="table table-bordered" id="board">
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
