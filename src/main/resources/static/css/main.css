@@ -30,11 +30,11 @@
 }
 
 .snake {
-	background-color: #ffcccc;
+	background-color: #fce7e6;
 }
 
 .ladder {
-	background-color: #ccffcc;
+	background-color: #e3fae3;
 }
 
 .red {
@@ -45,12 +45,27 @@
 
 }
 
+.redActive {
+    background-color: red;
+
+    border-radius: 4px;
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    color: #fff;
+    text-decoration: none;
+
+}
+
 .yellow {
 	background-color: yellow;
 	color: #000000;
 	padding: 2px;
 	border: 1px solid #000000;
 
+}
+.yellowActive {
+    background-color: yellow;
 }
 
 .green {
@@ -60,6 +75,9 @@
 	border: 1px solid #000000;
 
 }
+.greenActive {
+    background-color: green;
+}
 
 .blue {
 	background-color: blue;
@@ -67,6 +85,9 @@
 	padding: 2px;
 	border: 1px solid #000000;
 
+}
+.blueActive {
+    background-color: blue;
 }
 
 .messageText {
@@ -93,3 +114,172 @@ td {
 #body::backdrop {
     background-color: rgba(255,255,255,0);
 }
+
+.ladderLine{
+    transform-origin: 0 100%;
+    height: 3px; /* Line width of 3 */
+   /*  background: #e9f7e9; //green  */
+    -webkit-transform-origin: 0 100%;
+  	border: 1px dashed green;
+  	 /*opacity: 0.5; */
+  	position: absolute;
+  	 top: 680.465px;
+
+}
+.ladderLine:hover{
+ /* background: #07ba0b; //green */
+ border: 1px solid green;
+}
+.ladderLineHover{
+ /* background: #07ba0b; //green */
+ border: 1px double green;
+ background-color: green;
+
+}
+
+.snakeLine{
+    transform-origin: 0 100%;
+    height: 3px; /* Line width of 3 */
+   /* background: #facac8; //red */
+    -webkit-transform-origin: 0 100%;
+  	border: 1px dashed red;
+  	 /*opacity: 0.5; */
+    position: absolute;
+  	 top: 542.465px;
+
+}
+
+.snakeLine:hover{
+ /* background: #07ba0b; //green */
+ border: 1px solid red;
+}
+.snakeLineHover{
+ /* background: #07ba0b; //green */
+
+  border: 1px double red;
+  background-color: red;
+}
+
+#ladderLine_71_91 {
+position: absolute;
+    transform: rotate(-90.0deg);
+    width: 93.211px;
+    top: 158.465px;
+    left: 928.764px;
+}
+#ladderLine_28_84 {
+    position: absolute;
+        transform: rotate(-128deg);
+        width: 512.211px;
+        top: 542.465px;
+        left: 721.764px;
+}
+
+#ladderLine_4_14 {
+    position: absolute;
+    transform: rotate(-12deg);
+    width: 230.211px;
+    top: 710.465px;
+    left: 400.764px;
+}
+#ladderLine_9_31 {
+position: absolute;
+    position: absolute;
+        transform: rotate(-72deg);
+        width: 181.211px;
+        top: 695.465px;
+        left: 886.764px
+}
+
+#ladderLine_20_38 {
+    position: absolute;
+    transform: rotate(-39deg);
+    width: 152.211px;
+    top: 620.465px;
+    left: 105.764px;
+}
+#ladderLine_40_59 {
+       position: absolute;
+       transform: rotate(-66deg);
+       width: 106.211px;
+       top: 466.465px;
+       left: 106.764px;
+}
+#ladderLine_51_67 {
+     position: absolute;
+         transform: rotate(-166deg);
+         width: 230.211px;
+         top: 333.465px;
+         left: 924.764px;
+}
+
+#ladderLine_63_81 {
+       position: absolute;
+           transform: rotate(-139deg);
+           width: 170.211px;
+           top: 251.465px;
+           left: 225.764px;
+}
+
+#snakeLine_17_7 {
+    position: absolute;
+    transform: rotate(13deg);
+    width: 228.211px;
+    top: 668.465px;
+    left: 400.764px;
+}
+#snakeLine_54_34 {
+position: absolute;
+    transform: rotate(90deg);
+    width: 100.211px;
+    top: 370.465px;
+    left: 630.764px;
+}
+#snakeLine_62_19 {
+     position: absolute;
+     transform: rotate(90deg);
+     width: 330.211px;
+     top: 294.465px;
+     left: 140.764px;
+}
+#snakeLine_64_60 {
+ position: absolute;
+     transform: rotate(170deg);
+     width: 220.211px;
+     top: 280.465px;
+     left: 318.764px;
+}
+#snakeLine_87_24 {
+    position: absolute;
+    transform: rotate(122deg);
+    width: 486.211px;
+    top: 134.465px;
+    left: 618.764px;
+}
+#snakeLine_93_73 {
+position: absolute;
+    transform: rotate(90deg);
+    width: 98.211px;
+    top: 65.465px;
+    left: 730.764px;
+}
+#snakeLine_95_75 {
+     position: absolute;
+     transform: rotate(90deg);
+     width: 98.211px;
+     top: 64.465px;
+     left: 533.764px;
+}
+#snakeLine_99_78 {
+    position: absolute;
+    transform: rotate(60deg);
+    width: 112.211px;
+    top: 66.465px;
+    left: 183.764px;
+}
+
+
+
+
+
+

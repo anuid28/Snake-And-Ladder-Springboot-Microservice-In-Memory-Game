@@ -95,11 +95,11 @@ public class GameService {
     private void currentPlayerPositionZero() {
         if (this.getDiceOutcome() != 6) {
             this.nextPlayerTurn(false);
-            this.getNextMoveObj().setMessage("Better Luck, Next Time");
+            this.getNextMoveObj().setMessage("Better Luck, Next Time.");
         } else {
             this.getPlayers().getPlayerList().get(this.getCurrentPlayerTurn()).setCurrentPosition(1);
             this.nextPlayerTurn(true);
-            this.getNextMoveObj().setMessage("Your position started. You got another chance to roll the dice");
+            this.getNextMoveObj().setMessage("Your position started. You got another chance to roll the dice.");
         }
 
     }
@@ -112,10 +112,12 @@ public class GameService {
         if (snakeAndLadder.getSnakeAndLadderPointer().containsKey(newPosition)) {
             int SnakeAndLadderValue = snakeAndLadder.getSnakeAndLadderPointer().get(newPosition);
             if (newPosition > SnakeAndLadderValue) {
-                this.getNextMoveObj().setMessage("Snake Bite");
+                this.getNextMoveObj().setMessage("Snake Bite.");
             } else {
-                this.getNextMoveObj().setMessage("Ladder Ride");
+                this.getNextMoveObj().setMessage("Ladder Ride.");
             }
+
+            this.getNextMoveObj().getSnakeOrLadderPointer().put(newPosition,SnakeAndLadderValue);
             newPosition = SnakeAndLadderValue;
         }
         String message = this.getNextMoveObj().getMessage();
@@ -123,7 +125,7 @@ public class GameService {
 
             if (this.getDiceOutcome() == 6) {
                 this.nextPlayerTurn(true);
-                this.getNextMoveObj().setMessage(message + " You are close to win and You got one more change to roll the dice");
+                this.getNextMoveObj().setMessage(message + " You are close to win and You got one more change to roll the dice.");
             } else {
                 this.nextPlayerTurn(false);
                 this.getNextMoveObj().setMessage(message + " You are close to win.");
@@ -134,7 +136,7 @@ public class GameService {
 
             if (this.getDiceOutcome() == 6) {
                 this.nextPlayerTurn(true);
-                this.getNextMoveObj().setMessage(message + " Woo, You got one more change to roll the dice");
+                this.getNextMoveObj().setMessage(message + " You got one more change to roll the dice.");
             } else {
                 this.nextPlayerTurn(false);
             }

@@ -7,9 +7,11 @@ $( document ).ready(function() {
             url: "/Game/nextMove",
             // data: data,
             beforeSend: function() {
+             $("#throwDice").prop('disabled', true);
                 $("#diceLoading").show();
                 $(".allImg").hide();
                 $(".allPlayer").removeClass('active');
+
             },
             success: function(result){
                 let winner = result.winner;
@@ -23,23 +25,42 @@ $( document ).ready(function() {
                 let currentPlayerTurn = result.currentPlayerTurn;
                 let previousPositionOfCurrentPlayer =result.previousPositionOfCurrentPlayer;
                 let updatedPlayerList = result.players.playerList;
-                $("#liPlayer_"+nextPlayerTurn).addClass('active');
+                $("#liPlayer_"+currentPlayerTurn).addClass('active');
                 $("#message").html(message).addClass('messageText');
-                updatePlayerPosition(updatedPlayerList);
+                console.log("currentPlayerTurn= "+currentPlayerTurn);
+                console.log("nextPlayerTurn= "+nextPlayerTurn);
+                console.log("updatedPlayerList= "+JSON.stringify(updatedPlayerList));
+
+
+                const snakeOrLadderPointer =result.snakeOrLadderPointer;
+
 
                 $("#diceLoading").hide();
                 $("#dice_"+diceOutcome).show();
-                $("#td_"+previousPositionOfCurrentPlayer).addClass('yellowBox');
-                $("#td_"+previousPositionOfCurrentPlayer).fadeOut('slow');
-                $("#td_"+previousPositionOfCurrentPlayer).fadeIn('slow');
+                updatePlayerPosition(updatedPlayerList,currentPlayerTurn, previousPositionOfCurrentPlayer,snakeOrLadderPointer);
 
-                setTimeout(function() {
-                    $("#td_"+previousPositionOfCurrentPlayer).removeClass('yellowBox');
-                    },500
-                );
+
+//                $("#td_"+previousPositionOfCurrentPlayer).addClass('yellowBox');
+//                $("#td_"+previousPositionOfCurrentPlayer).fadeOut('slow');
+//                $("#td_"+previousPositionOfCurrentPlayer).fadeIn('slow');
+//
+//                setTimeout(function() {
+//                    $("#td_"+previousPositionOfCurrentPlayer).removeClass('yellowBox');
+//                    },500
+//                );
             },
             dataType: "json"
-       });
+       }).done(function(result) {
+     //  var diceOutcome = result.diceOutcome;
+      // alert(diceOutcome);
+     //  setTimeout(function() {
+
+                      $("#throwDice").prop('disabled', false);
+                    //  },1000
+                   //);
+
+
+       });;
 });
 
     $("#newGame").click(function() {
@@ -120,17 +141,25 @@ function loadSnakeAndLadder(snakeLadder) {
         var snake = $("#snakeImage").html();
         var ladder=$("#ladderImage").html();
         var  img = '';
+        var lineClass='';
         if(key>value) {
             tdClass ='snake';
             img = snake;
+            lineClass  ='snakeLine';
         }else {
             tdClass ='ladder';
             img = ladder;
+            lineClass  ='ladderLine';
+
         }
         $("#td_"+key).addClass(tdClass);
-        let targetText = ' <span class ="small">T: '+value+'</span>'
-        $("#td_"+key).append(targetText);
+       // let targetText = ' <span class ="small">T: '+value+'</span>'
+      //  $("#td_"+key).append(targetText);
+        $("#td_"+key).html('');
         $("#td_"+key).append(img);
+
+        $("#newGameMessage").after('<div id="'+lineClass+'_'+key+'_'+value+'" class="'+lineClass+'"></div>');
+
     }
 }
 function  loadPlayers(playerList) {
@@ -142,11 +171,11 @@ function  loadPlayers(playerList) {
     let playerName = " ";
     let playerCurrentPosition =0;
     for(let k= 0; k<len; k++) {
-        if(k==0) {
-            classActive ="active";
-        }else {
-            classActive =" ";
-        }
+//        if(k==0) {
+//            classActive ="redActive";
+//        }else {
+//            classActive =" ";
+//        }
         playerObj = playerList[k];
         playerId  =  playerObj.playerId;
         playerName = playerObj.name;
@@ -159,22 +188,117 @@ function  loadPlayers(playerList) {
     $("#players").html(players);
  }
 
-function updatePlayerPosition(updatedPlayerList) {
+function  updatePlayerPosition(updatedPlayerList,currentPlayerTurn, previousPositionOfCurrentPlayer, snakeOrLadderPointer) {
     let len = updatedPlayerList.length;
     let playerObj=null;
     let playerId  =0;
     let playerCurrentPosition =0;
+    let currentPositionOfCurrentPlayer =0;
     $(".currentPosition").remove();
     const colorClassPlayer = ['red','yellow','green', 'blue'];
     for(let k= 0; k<len; k++) {
         playerObj = updatedPlayerList[k];
         playerId  =  playerObj.playerId;
         playerCurrentPosition =playerObj.currentPosition;
-        $("#currentPositionPlayer_"+playerId).html(playerCurrentPosition);
-        if(playerCurrentPosition>0) {
-          $("#td_"+playerCurrentPosition).append('<span class="currentPosition '+colorClassPlayer[k] +'"> P '+playerId+'</span>');
+
+
+        if(playerId != currentPlayerTurn) {
+            $("#currentPositionPlayer_"+playerId).html(playerCurrentPosition);
+            if(playerCurrentPosition>0) {
+              $("#td_"+playerCurrentPosition).append('<span id="spanP'+playerId+'" class="currentPosition '+colorClassPlayer[k] +'"> P '+playerId+'</span>');
+            }
+        }else{
+            currentPositionOfCurrentPlayer = playerCurrentPosition;
+            $("#currentPositionPlayer_"+playerId).html(previousPositionOfCurrentPlayer+" → "+playerCurrentPosition);
         }
     }
+    console.log("currentPositionOfCurrentPlayer"+currentPositionOfCurrentPlayer);
+   let key = 0;
+   let value = 0;
+   let lineClass ='';
+   let lineHoverClass ='';
+
+    if(!($.isEmptyObject(snakeOrLadderPointer))){
+        for (var i = 0, keys = Object.keys(snakeOrLadderPointer), keyLen = keys.length; i < keyLen; i++) {
+             key = keys[i];
+             value = snakeOrLadderPointer[keys[i]];
+            if(key>value) {
+                lineId  ='snakeLine'+'_'+key+'_'+value;
+                lineClass ='snakeLine';
+                lineHoverClass ='snakeLineHover';
+
+            }else {
+                lineId  ='ladderLine'+'_'+key+'_'+value;
+                lineClass ='ladderLine';
+                lineHoverClass ='ladderLineHover';
+            }
+            break;
+        }
+        console.log("key"+key);
+        console.log("value"+value);
+    }
+
+    let targetStepPositionOfCurrentPlayer =0;
+    if(key==0) {
+        targetStepPositionOfCurrentPlayer = currentPositionOfCurrentPlayer;
+    }else {
+        targetStepPositionOfCurrentPlayer = key;
+    }
+
+    console.log("targetStepPositionOfCurrentPlayer="+targetStepPositionOfCurrentPlayer);
+    console.log("previousPositionOfCurrentPlayer="+previousPositionOfCurrentPlayer);
+    //if(previousPositionOfCurrentPlayer>0) {
+       // $("#td_"+previousPositionOfCurrentPlayer).append('<span id="spanP'+currentPlayerTurn+'" class="currentPosition '+colorClassPlayer[currentPlayerTurn-1] +'"> P '+currentPlayerTurn+'</span>');
+    let counter=1;
+    if(targetStepPositionOfCurrentPlayer>0) {
+    var colorClassOfCurrentPlayer= colorClassPlayer[currentPlayerTurn-1];
+
+        for(let j=previousPositionOfCurrentPlayer; j<=targetStepPositionOfCurrentPlayer; j++) {
+            moveCurrentPlayerPosition(j,currentPlayerTurn, colorClassOfCurrentPlayer,counter );
+            counter++;
+        }
+    }
+
+        if(value>0) {
+
+          setTimeout(function() {
+               // $("#"+lineId).trigger("mouseover");
+              //  $("#"+lineId).hide('slow').show('slow').hide('slow').show('slow');
+                $("#"+lineId).addClass(lineHoverClass);
+                },500 * counter
+            );
+          //  $("#"+lineId ).trigger("mouseout");
+           // $("#td_"+value).append('<span id="spanP'+currentPlayerTurn+'" class="currentPosition '+colorClassPlayer[currentPlayerTurn-1] +'"> P '+currentPlayerTurn+'</span>');
+           //$("#"+lineId).fadeOut(1000, function(){$(this).removeClass(lineHoverClass, 1000)}).fadeIn(1000);
+
+setTimeout(function() {
+
+                $("."+lineHoverClass).removeClass(lineHoverClass);
+               },500 * (counter+1)
+            );
+
+     setTimeout(function() {
+
+                    $("#spanP"+currentPlayerTurn).remove();
+                     $("#td_"+value).append('<span id="spanP'+currentPlayerTurn+'" class="currentPosition '+colorClassPlayer[currentPlayerTurn-1] +'"> P '+currentPlayerTurn+'</span>');
+                    },500 * (counter+1)
+                 );
+
+
+
+
+            console.log(lineId +" is there");
+
+        }
+   // }
+ }
+ function  moveCurrentPlayerPosition(j,currentPlayerTurn, colorClassOfCurrentPlayer,counter){
+ setTimeout(function() {
+              $("#spanP"+currentPlayerTurn).hide().remove();
+              $("#td_"+j).append('<span id="spanP'+currentPlayerTurn+'" class="currentPosition '+colorClassOfCurrentPlayer +'" style="display:none;"> P '+currentPlayerTurn+'</span>');
+              $("#spanP"+currentPlayerTurn).show();
+                  },500*counter
+             );
  }
 
  function enterFullScreen(element) {
